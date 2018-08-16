@@ -15,9 +15,14 @@ class WeatherTableViewController: UITableViewController {
     var date = [String]()
     var weather = [String]()
     
+    @IBAction func button_backhome(_ sender: Any) {
+        date = [String]()
+        weather = [String]()
+        dismiss(animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         for i in 0...6 {
             label_date[i].text = self.date[i]
             label_weather[i].text = self.weather[i]

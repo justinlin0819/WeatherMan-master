@@ -11,11 +11,14 @@ import UIKit
 class CityTableViewController: UITableViewController {
     
     @IBOutlet var button_city: [UIButton]!
-    var date = [String]()
+    /*var date = [String]()
     var weather = [String]()
-    var city: String = ""
+    var city: String = ""*/
     
     @IBAction func button_cityselection(_ sender: UIButton) {
+        var date = [String]()
+        var weather = [String]()
+        var city: String = ""
         switch sender {
         case button_city[0]:
             city = "臺北市"
@@ -74,26 +77,25 @@ class CityTableViewController: UITableViewController {
                         let id = location["_id"] as! String
                         let city_t = location["locationName"] as! String
                         let weather_t = location["parameterName1"] as! String
-                        if (Int(id)! % 2 == 0) && city_t == self.city {
-                            let date_t = location["startTime"] as! String
-                            self.date.append(String(date_t.prefix(10)))
-                        self.weather.append(String(weather_t))
+                        let date_t = location["startTime"] as! String
+                        if (Int(id)! % 2 == 0) && city_t == city {
+                        date.append(String(date_t.prefix(10)))
+                        weather.append(String(weather_t))
                     }
                 }
-                }
-            
+              }
             }
             task.resume()
         }
         
-        while self.date.count != 7 {
+        while date.count != 7 {
             
         }
-        
+         
         if let controller = storyboard?.instantiateViewController(withIdentifier: "weathertableview") as? WeatherTableViewController {
             for i in 0...6 {
-                controller.date.append(self.date[i])
-                controller.weather.append(self.weather[i])
+                controller.date.append(date[i])
+                controller.weather.append(weather[i])
             }
             present(controller, animated: true, completion: nil)
         }
