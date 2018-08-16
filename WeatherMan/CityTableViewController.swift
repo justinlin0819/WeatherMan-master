@@ -78,12 +78,14 @@ class CityTableViewController: UITableViewController {
                             let date_t = location["startTime"] as! String
                             self.date.append(String(date_t.prefix(10)))
                         self.weather.append(String(weather_t))
-                        }
                     }
                 }
-        }
+                }
+            
+            }
             task.resume()
-    }
+        }
+        
         while self.date.count != 7 {
             
         }
