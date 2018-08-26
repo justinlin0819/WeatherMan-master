@@ -88,8 +88,22 @@ class WeatherTableViewController: UITableViewController {
                 image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
             case "陰時多雲短暫陣雨或雷雨":
                 image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
+            case "多雲時陰陣雨或雷雨":
+                image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
+            case "多雲短暫陣雨或雷雨":
+                image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
+            case "陰短暫陣雨或雷雨":
+                image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
+            case "多雲短暫陣雨":
+                image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
+            case "晴午後短暫雷陣雨":
+                image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
             case "陰時多雲":
                 image_weather[i].image = UIImage(named: "陰時多雲")
+            case "陰天":
+                image_weather[i].image = UIImage(named: "陰時多雲")
+            case "晴時多雲":
+                image_weather[i].image = UIImage(named: "晴時多雲")
             case "多雲":
                 image_weather[i].image = UIImage(named: "多雲")
             case "陰陣雨或雷雨":
