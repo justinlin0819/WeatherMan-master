@@ -16,40 +16,86 @@ class WeatherTableViewController: UITableViewController {
     @IBOutlet var label_temph: [UILabel]!
     @IBOutlet var label_templ: [UILabel]!
     
-    var Final_Result: [Results] = []
     var city: String = ""
-    var date = [Date]()
-    var weather = [String]()
-    var temperature_h = [String]()
-    var temperature_l = [String]()
     
     @IBAction func button_backhome(_ sender: Any) {
-        Final_Result = []
-        date = [Date]()
-        weather = [String]()
-        temperature_h = [String]()
-        temperature_l = [String]()
         dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        label_city.text = self.city
         let urlStr = "http://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=e6831708-02b4-4ef8-98fa-4b4ce53459d9"
         if let url = URL(string: urlStr) {
             let task = URLSession.shared.dataTask(with: url) { (data, response , error) in
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .iso8601
                 if let data = data, let weather = try? decoder.decode(Weather.self, from: data) {
-                    self.Final_Result = weather.result.results
+                    DispatchQueue.main.async {
+                    var i = 0
+                    for w in weather.result.results {
+                        if ((Int(w._id))! % 2) == 0 && (w.locationName == self.city) {
+                            let weekday = Calendar.current.component(.weekday, from: w.startTime)
+                            switch weekday {
+                            case 1:
+                                self.label_date[i].text = "星期日"
+                            case 2:
+                                self.label_date[i].text = "星期一"
+                            case 3:
+                                self.label_date[i].text = "星期二"
+                            case 4:
+                                self.label_date[i].text = "星期三"
+                            case 5:
+                                self.label_date[i].text = "星期四"
+                            case 6:
+                                self.label_date[i].text = "星期五"
+                            case 7:
+                                self.label_date[i].text = "星期六"
+                            default:
+                                break
+                            }
+                                switch w.parameterName1 {
+                                case "多雲時陰短暫陣雨或雷雨":
+                                    self.image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
+                                case "陰時多雲短暫陣雨或雷雨":
+                                    self.image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
+                                case "多雲時陰陣雨或雷雨":
+                                    self.image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
+                                case "多雲短暫陣雨或雷雨":
+                                    self.image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
+                                case "陰短暫陣雨或雷雨":
+                                    self.image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
+                                case "多雲短暫陣雨":
+                                    self.image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
+                                case "晴午後短暫雷陣雨":
+                                    self.image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
+                                case "陰時多雲":
+                                    self.image_weather[i].image = UIImage(named: "陰時多雲")
+                                case "陰天":
+                                    self.image_weather[i].image = UIImage(named: "陰時多雲")
+                                case "晴時多雲":
+                                    self.image_weather[i].image = UIImage(named: "晴時多雲")
+                                case "多雲":
+                                    self.image_weather[i].image = UIImage(named: "多雲")
+                                case "陰陣雨或雷雨":
+                                    self.image_weather[i].image = UIImage(named: "雷雨")
+                                default:
+                                    self.image_weather[i].image = UIImage(named: "晴")
+                                }
+                            self.label_temph[i].text = w.parameterName2
+                            self.label_templ[i].text = w.parameterName3
+                               i = i + 1
+                            }
+                        }
+                    }
                 }
             }
             task.resume()
         }
         
-        label_city.text = self.city
         
-        while self.Final_Result.count != 308 {
-            
+        /*while self.Final_Result.count != 308 {
+ 
         }
         
         for i in 0...307 {
@@ -111,7 +157,7 @@ class WeatherTableViewController: UITableViewController {
             default:
                 image_weather[i].image = UIImage(named: "晴")
             }
-        }
+        }*/
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
