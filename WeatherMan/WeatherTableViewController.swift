@@ -33,8 +33,10 @@ class WeatherTableViewController: UITableViewController {
                 if let data = data, let weather = try? decoder.decode(Weather.self, from: data) {
                     DispatchQueue.main.async {
                     var i = 0
+                    var j = 0
                     for w in weather.result.results {
-                        if ((Int(w._id))! % 2) == 0 && (w.locationName == self.city) {
+                        if w.locationName == self.city {
+                            if j % 2 == 0 {
                             let weekday = Calendar.current.component(.weekday, from: w.startTime)
                             switch weekday {
                             case 1:
@@ -65,6 +67,8 @@ class WeatherTableViewController: UITableViewController {
                                     self.image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
                                 case "陰短暫陣雨或雷雨":
                                     self.image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
+                                case "陰時多雲陣雨或雷雨":
+                                    self.image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
                                 case "多雲短暫陣雨":
                                     self.image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
                                 case "晴午後短暫雷陣雨":
@@ -86,78 +90,20 @@ class WeatherTableViewController: UITableViewController {
                             self.label_templ[i].text = w.parameterName3
                                i = i + 1
                             }
+                        if i == 7 {
+                            break
                         }
+                            j = j + 1
+                            if j == 13 {
+                                break
+                            }
+                       }
+                      }
                     }
                 }
             }
             task.resume()
         }
-        
-        
-        /*while self.Final_Result.count != 308 {
- 
-        }
-        
-        for i in 0...307 {
-            if (Int(self.Final_Result[i]._id)! % 2 == 0) && self.Final_Result[i].locationName == self.city {
-                date.append(self.Final_Result[i].startTime)
-                weather.append(self.Final_Result[i].parameterName1)
-                temperature_h.append(self.Final_Result[i].parameterName2)
-                temperature_l.append(self.Final_Result[i].parameterName3)
-            }
-        }
-        
-        for i in 0...6 {
-            let weekday = Calendar.current.component(.weekday, from: self.date[i])
-            switch weekday {
-            case 1:
-                label_date[i].text = "星期日"
-            case 2:
-                label_date[i].text = "星期一"
-            case 3:
-                label_date[i].text = "星期二"
-            case 4:
-                label_date[i].text = "星期三"
-            case 5:
-                label_date[i].text = "星期四"
-            case 6:
-                label_date[i].text = "星期五"
-            case 7:
-                label_date[i].text = "星期六"
-            default:
-                break
-            }
-            label_temph[i].text = self.temperature_h[i]
-            label_templ[i].text = self.temperature_l[i]
-            switch self.weather[i] {
-            case "多雲時陰短暫陣雨或雷雨":
-                image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
-            case "陰時多雲短暫陣雨或雷雨":
-                image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
-            case "多雲時陰陣雨或雷雨":
-                image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
-            case "多雲短暫陣雨或雷雨":
-                image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
-            case "陰短暫陣雨或雷雨":
-                image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
-            case "多雲短暫陣雨":
-                image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
-            case "晴午後短暫雷陣雨":
-                image_weather[i].image = UIImage(named: "多雲時陰短暫陣雨或雷雨")
-            case "陰時多雲":
-                image_weather[i].image = UIImage(named: "陰時多雲")
-            case "陰天":
-                image_weather[i].image = UIImage(named: "陰時多雲")
-            case "晴時多雲":
-                image_weather[i].image = UIImage(named: "晴時多雲")
-            case "多雲":
-                image_weather[i].image = UIImage(named: "多雲")
-            case "陰陣雨或雷雨":
-                image_weather[i].image = UIImage(named: "雷雨")
-            default:
-                image_weather[i].image = UIImage(named: "晴")
-            }
-        }*/
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
