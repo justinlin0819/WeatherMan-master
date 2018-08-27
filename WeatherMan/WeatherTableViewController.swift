@@ -33,10 +33,8 @@ class WeatherTableViewController: UITableViewController {
                 if let data = data, let weather = try? decoder.decode(Weather.self, from: data) {
                     DispatchQueue.main.async {
                     var i = 0
-                    var j = 0
                     for w in weather.result.results {
                         if w.locationName == self.city {
-                            if j % 2 == 0 {
                             let weekday = Calendar.current.component(.weekday, from: w.startTime)
                             switch weekday {
                             case 1:
@@ -55,6 +53,9 @@ class WeatherTableViewController: UITableViewController {
                                 self.label_date[i].text = "星期六"
                             default:
                                 break
+                            }
+                            if (i > 0) && (self.label_date[i].text == self.label_date[i-1].text) {
+                                continue
                             }
                                 switch w.parameterName1 {
                                 case "多雲時陰短暫陣雨或雷雨":
@@ -89,14 +90,9 @@ class WeatherTableViewController: UITableViewController {
                             self.label_temph[i].text = w.parameterName2
                             self.label_templ[i].text = w.parameterName3
                                i = i + 1
-                            }
                         if i == 7 {
                             break
                         }
-                            j = j + 1
-                            if j == 13 {
-                                break
-                            }
                        }
                       }
                     }
